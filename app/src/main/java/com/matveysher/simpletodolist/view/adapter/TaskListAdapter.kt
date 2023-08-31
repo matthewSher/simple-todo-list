@@ -45,6 +45,7 @@ class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
     /**
      * Refreshing [taskList] when it changes
      */
+    // TODO: change notifyDataSetChanged() to DiffUtil
     @SuppressLint("NotifyDataSetChanged")
     fun setList(listOfTasks: List<Task>) {
         taskList = listOfTasks
