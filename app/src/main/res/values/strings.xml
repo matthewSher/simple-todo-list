@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Simple ToDo list</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="task_title_et_hint">Title</string>
+    <string name="fragment_create_task_title">Create new task</string>
+    <string name="task_description_et_hint">Description</string>
+    <string name="create_task_button_text">Confirm</string>
+    <string name="task_title_et_error_text">This field is required!</string>
+</resources>
