@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.matveysher.simpletodolist.R
 import com.matveysher.simpletodolist.databinding.TaskListItemBinding
 import com.matveysher.simpletodolist.model.entities.Task
-class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
+class TaskListAdapter(private val taskStateQuery: (Int, Boolean) -> Unit) :
+    RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
 
     private var taskList = emptyList<Task>()
 
@@ -19,12 +20,12 @@ class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
         /**
          * Binding views of task_list_item.xml
          */
-        fun bind(task: Task) {
+        fun bind(task: Task, sendTaskState: (Int, Boolean) -> Unit) {
             binding.apply {
                 taskTitle.text = task.title
                 taskCompletedCheckbox.isChecked = task.isCompleted
                 taskCompletedCheckbox.setOnCheckedChangeListener { _, isChecked ->
-                    // При нажатии на чекбокс в БД должны отправиться данные о статусе задачи
+                    sendTaskState(task.id, isChecked)
                 }
             }
         }
@@ -39,7 +40,7 @@ class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
     override fun getItemCount(): Int = taskList.size
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(taskList[position])
+        holder.bind(taskList[position], taskStateQuery)
     }
 
     /**

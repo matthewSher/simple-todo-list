@@ -16,7 +16,7 @@ class TaskRepository(private val taskDao: TaskDao) {
         taskDao.delete(task)
     }
 
-    suspend fun updateTaskIsCompleted(taskId: Int, isCompleted: Boolean) {
-        taskDao.updateTaskIsCompleted(taskId, isCompleted)
+    suspend fun updateTaskState(taskId: Int, isCompleted: Boolean) {
+        taskDao.updateTaskState(taskId, isCompleted)
     }
 }

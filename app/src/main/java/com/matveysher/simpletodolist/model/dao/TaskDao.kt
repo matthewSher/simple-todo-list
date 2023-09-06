@@ -18,7 +18,7 @@ interface TaskDao {
     suspend fun delete(task: Task)
 
     @Query("UPDATE tasks SET task_completed = :isCompleted WHERE id = :taskId")
-    suspend fun updateTaskIsCompleted(taskId: Int, isCompleted: Boolean)
+    suspend fun updateTaskState(taskId: Int, isCompleted: Boolean)
 
     @Query("SELECT * FROM tasks")
     fun getAllTasks(): LiveData<List<Task>>

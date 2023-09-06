@@ -20,6 +20,7 @@ class TaskListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TaskListAdapter
+    private lateinit var taskStateQuery: (Int, Boolean) -> Unit
 
     private val viewModel: TaskListViewModel by viewModels()
 
@@ -40,10 +41,17 @@ class TaskListFragment : Fragment() {
         viewModel.initTaskDatabase()
 
         /**
+         *
+         */
+        taskStateQuery = { taskId, isCompleted ->
+            viewModel.sendTaskState(taskId, isCompleted)
+        }
+
+        /**
          * Initializing task list
          */
         recyclerView = binding.taskList
-        adapter = TaskListAdapter()
+        adapter = TaskListAdapter(taskStateQuery)
         recyclerView.adapter = adapter
 
 
