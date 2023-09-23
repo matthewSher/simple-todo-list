@@ -41,11 +41,9 @@ class TaskListFragment : Fragment() {
         viewModel.initTaskDatabase()
 
         /**
-         *
+         * Sending task state changes to DB
          */
-        taskStateQuery = { taskId, isCompleted ->
-            viewModel.sendTaskState(taskId, isCompleted)
-        }
+        taskStateQuery = { taskId, isCompleted -> viewModel.sendTaskState(taskId, isCompleted) }
 
         /**
          * Initializing task list
@@ -59,7 +57,7 @@ class TaskListFragment : Fragment() {
          * Observing task list changes and refreshing it in [TaskListAdapter]
          */
         viewModel.getAllTasks().observe(viewLifecycleOwner) { taskList ->
-            adapter.setList(taskList.asReversed())
+            adapter.updateData(taskList.asReversed())
         }
 
         /**

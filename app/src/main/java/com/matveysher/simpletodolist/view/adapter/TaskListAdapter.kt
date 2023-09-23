@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.matveysher.simpletodolist.R
 import com.matveysher.simpletodolist.databinding.TaskListItemBinding
 import com.matveysher.simpletodolist.model.entities.Task
+import com.matveysher.simpletodolist.view.adapter.diffutil.TaskListDataDiffCallback
+
 class TaskListAdapter(private val taskStateQuery: (Int, Boolean) -> Unit) :
     RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
 
@@ -46,10 +49,9 @@ class TaskListAdapter(private val taskStateQuery: (Int, Boolean) -> Unit) :
     /**
      * Refreshing [taskList] when it changes
      */
-    // TODO: change notifyDataSetChanged() to DiffUtil
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(listOfTasks: List<Task>) {
-        taskList = listOfTasks
-        notifyDataSetChanged()
+    fun updateData(newTaskList: List<Task>) {
+        val diffResult = DiffUtil.calculateDiff(TaskListDataDiffCallback(taskList, newTaskList))
+        taskList = newTaskList
+        diffResult.dispatchUpdatesTo(this)
     }
 }
